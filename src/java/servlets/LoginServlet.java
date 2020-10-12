@@ -55,14 +55,15 @@ public class LoginServlet extends HttpServlet {
            User accservlogin = accserv.login(username, pswd);
            if (accservlogin.getPassword() == null ){
                
-               getServletContext().getRequestDispatcher("/WEB-INF/home.java").forward(request, response);
-               session.setAttribute("username" , username);
+                session.setAttribute("username" , username);
+               getServletContext().getRequestDispatcher("/home").forward(request, response);
+              
                
            }
            else{
                 request.setAttribute("username", username);
                 request.setAttribute("pswd", pswd);
-                request.setAttribute("invalid", "Please fill out out the username and the password");
+                request.setAttribute("invalid", "Incorrect username and password");
                 getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
        }
     }
@@ -84,7 +85,7 @@ class AccountService{
              accept.setPassword(null);
         }
         else{
-             accept = null;
+             accept.setPassword("incorrect");
         }
         return accept;
     }
